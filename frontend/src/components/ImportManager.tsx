@@ -64,6 +64,33 @@ export default function ImportManager({ session }: { session?: any }) {
     }
   };
 
+  const downloadReport = () => {
+    if (anomalies.length === 0) {
+      alert("No anomalies to report.");
+      return;
+    }
+    
+    let reportContent = "Import Report - Detected Anomalies\n";
+    reportContent += "===================================\n\n";
+    
+    anomalies.forEach((a) => {
+      reportContent += `Row ${a.original_row_index}:\n`;
+      reportContent += `Anomaly: ${a.anomaly_type}\n`;
+      reportContent += `Raw Data: ${JSON.stringify(a.raw_data)}\n`;
+      reportContent += `Status: Pending Review\n`;
+      reportContent += "-----------------------------------\n";
+    });
+
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'import_report.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleResolve = async (id: string, action: 'approve' | 'reject') => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/anomalies/${id}/resolve`, {
@@ -102,6 +129,12 @@ export default function ImportManager({ session }: { session?: any }) {
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           >
             {uploading ? 'Processing...' : 'Upload'}
+          </button>
+          <button 
+            onClick={downloadReport}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Download Report
           </button>
         </div>
       </div>
