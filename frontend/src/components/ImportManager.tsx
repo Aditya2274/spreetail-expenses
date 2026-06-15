@@ -15,7 +15,7 @@ export default function ImportManager({ session }: { session?: any }) {
 
   const fetchAnomalies = () => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/anomalies')
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/anomalies`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -46,7 +46,7 @@ export default function ImportManager({ session }: { session?: any }) {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/expenses/upload', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/expenses/upload`, {
         method: 'POST',
         body: formData,
       });
