@@ -39,6 +39,8 @@ To meet the strict relational database requirement and handle complex time-varyi
   * `anomaly_type` (String)
   * `resolution_status` (Enum: 'pending', 'resolved')
 
+*Note: All tables have Row-Level Security (RLS) enabled. Permissive policies are bound to the `anon` role to allow seamless CSV imports from the frontend during testing.*
+
 ---
 
 ## 2. CSV Anomaly Log & Resolution Policies
