@@ -18,10 +18,10 @@
 
 **Correction 2:**
 
-* *Error:* [Leave this blank and fill it in when Antigravity makes a mistake with a React hook or a Supabase join query tonight].
-* *Fix:* [Your fix here].
+* *Error:* The AI generated a standard Supabase SQL migration without explicit Row-Level Security (RLS) policies. Since Supabase now heavily enforces RLS by default, the backend's CSV parser crashed with a `42501` Row Level Security violation when attempting to insert new expenses using the `anon` key.
+* *Fix:* We updated the `init.sql` script to explicitly enable RLS on all tables and manually appended permissive `Allow all` policies bound to the `anon` role, allowing testing data flow to bypass security blocks.
 
 **Correction 3:**
 
-* *Error:* [Leave blank for now].
-* *Fix:* [Your fix here].
+* *Error:* While dynamically updating the React frontend to point to the live Render backend URL (`VITE_API_URL`), the AI's regex replacement script accidentally left trailing single quotes in Javascript template literals (e.g. `import.meta.env.VITE_API_URL...'`), causing the Vercel Vite production build to fail with syntax errors.
+* *Fix:* We executed a secondary Node script to strictly replace the corrupted terminating single quotes with proper backticks across all React components, successfully unblocking the Vercel deployment.
