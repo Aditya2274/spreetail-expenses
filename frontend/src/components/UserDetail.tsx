@@ -15,7 +15,7 @@ export default function UserDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/users/${id}/expenses`)
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/users/${id}/expenses`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
